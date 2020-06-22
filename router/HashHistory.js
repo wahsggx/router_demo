@@ -8,6 +8,7 @@ export default class HashHistory {
   }
 
   onChange = () => {
+    console.log(history)
     // 匹配失败重定向
     if (!location.hash || !this.router._cache[location.hash.slice(1)]) {
       window.location.hash = this.router._defaultRouter
@@ -26,15 +27,17 @@ export default class HashHistory {
   replace(url, onComplete) {
     // 优雅降级
     if (this.router._supportsReplaceState) {
+      console.log('_supportsReplaceState')
       window.location.hash = `${url}`
       window.history.replaceState(null, null, `${window.location.origin}#${url}`)
     } else {
+      console.log('no_supportsReplaceState')
       // 需要先看看当前URL是否已经有hash值
       const href = location.href
       const index = href.indexOf('#')
-      url = index > 0
-        ? `${href.slice(0, index)}#${url}`
-        : `${href}#${url}`
+      url = index > 0 ?
+        `${href.slice(0, index)}#${url}` :
+        `${href}#${url}`
       // 域名不变的情况下不会刷新页面
       window.location.replace(url)
     }

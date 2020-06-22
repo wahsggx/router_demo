@@ -27,6 +27,7 @@ export default class Html5Hstory {
   }
 
   onChange() {
+    console.log(history)
     // 匹配失败重定向
     if (location.pathname === '/' || !this.router._cache[location.pathname]) {
       window.history.pushState(null, '', `${window.location.origin}${this.router._defaultRouter}`);
@@ -35,6 +36,7 @@ export default class Html5Hstory {
       this.router._wrapper.innerHTML = this.router._cache[location.pathname]
       this.onComplete && this.onComplete() && (this.onComplete = null)
     }
+
   }
 
   push(url, onComplete) {
